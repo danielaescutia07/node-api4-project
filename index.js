@@ -6,14 +6,13 @@ const cors = require('cors');
 const server = express();
 
 const PORT = process.env.PORT || 8000;
+const data = require('./data');
 
 server.use(express.json());
 server.use(cors());
 
-server.get('/api/hello', (req, res) => {
-  res.json({
-    message: 'Api is working!'
-  });
+server.get('/api/users', (req, res) => {
+  res.json(data)
 });
 
 server.use('*', (req, res) => {
