@@ -1,14 +1,18 @@
 require('dotenv').config();
 
+const PORT = process.env.PORT || 8000;
+const data = require('./data');
+
+const path = require('path');
+
 const express = require('express');
 const cors = require('cors');
 
 const server = express();
 
-const PORT = process.env.PORT || 8000;
-const data = require('./data');
 
 server.use(express.json());
+server.use(express.static(path.join(__dirname, 'client/build')))
 server.use(cors());
 
 server.get('/api/users', (req, res) => {
@@ -16,7 +20,7 @@ server.get('/api/users', (req, res) => {
 });
 
 server.use('*', (req, res) => {
-  res.send(`<h1>Hello World!</h1>`);
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
 server.use((err, req, res, next) => { //eslint-disable-line
